@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,12 +7,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'client';
+  title = 'The Mentor App';
+  users:any; 
 
-  constructor(private http: HttpClientModule){
+  constructor(private http: HttpClient){
 
   }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
+  ngOnInit() {
+    
+    this.getUsers();
+  }
+
+  getUsers()
+  {
+    this.http.get('https://localhost:5001/api/user').subscribe(response =>{
+      this.users = response;
+    }, error => { 
+      console.log(error);
+    })
   }
 }
